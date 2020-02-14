@@ -6,6 +6,8 @@
 
 package ConsoleApp;
 
+import ConsoleApp.Commands.Command;
+
 import java.util.HashMap;
 
 public class CommandManager {
@@ -15,12 +17,13 @@ public class CommandManager {
         commandMap.put(commandName, command);
     }
 
-    public void execute(String commandName, HashMap<String, Command> commandMap, Collection collection) {
+    public void execute(String commandName, HashMap<String, Command> commandMap, Collection collection, String... args) {
         Command command = commandMap.get(commandName);
         if (command == null) {
             throw new IllegalStateException("no command registered for " + commandName);
         }
-        command.execute(commandMap, collection);
+            command.execute(commandMap, collection,args);
+
     }
 
     public HashMap<String, Command> getCommandMap() {

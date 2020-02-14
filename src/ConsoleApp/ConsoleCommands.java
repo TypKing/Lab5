@@ -6,37 +6,41 @@
 
 package ConsoleApp;
 
+import ConsoleApp.Commands.Command;
+
 import java.util.HashMap;
 import java.util.Map;
 public class ConsoleCommands {
     public void help(HashMap<String, Command> commandMap) {
         System.out.println(Colors.green() + "СПРАВКА" + Colors.reset());
         for (Map.Entry<String,Command> entry:commandMap.entrySet()) {
-            System.out.println(Colors.blue() + entry.getKey() + ": " + Colors.reset() + entry.getValue().getDescription());
+            System.out.println(Colors.blue() + entry.getKey() + entry.getValue().getArgs() + ": " + Colors.reset() + entry.getValue().getDescription());
         }
-
     }
-    Factory factory = new Factory();
     public void exit(){
         System.out.println("Пока");
     }
     public void add(Collection collection){
-        collection.add(factory.createWorker());
+        collection.add();
     }
     public void info(Collection collection){
         System.out.println(collection.getInformation());
     }
     public void show(Collection collection){
-        if(!collection.getCollection().isEmpty()) {
-            int i = 1;
-            for (Worker worker : collection.getCollection()) {
-                System.out.println("Работник №"+i);
-                System.out.println(worker.toString());
-                i++;
-            }
-        }
-        else{
-            System.out.println("Коллекция пуста, у нее нет ни одного элемента!");
+        collection.show();
+    }
+    public void remove(Collection collection,int id){
+        collection.remove(id);
+    }
+    public void update(Collection collection, int id){
+        collection.replace(id);
+    }
+    public void clear(Collection collection){collection.clear();}
+    public void addIfMax(Collection collection){
+        if(collection.addIfMax()){
+            System.out.println("Рабочий успешно добавлен");
+        }else {
+            System.out.println("Значение рабочего меньше максимального!");
         }
     }
 }

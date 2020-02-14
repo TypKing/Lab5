@@ -4,7 +4,11 @@
  * All rights reserved.
  */
 
-package ConsoleApp;
+package ConsoleApp.Commands;
+
+import ConsoleApp.Collection;
+import ConsoleApp.Commands.Command;
+import ConsoleApp.ConsoleCommands;
 
 import java.util.HashMap;
 
@@ -17,7 +21,7 @@ public class ExitCommand extends Command {
         }
 
         @Override
-        public void execute(HashMap<String, Command> commandMap, Collection collection) {
+        public void execute(HashMap<String, Command> commandMap, Collection collection, String... arg) {
             consoleCommands.exit();
         }
     }

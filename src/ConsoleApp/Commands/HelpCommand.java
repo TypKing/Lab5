@@ -4,11 +4,15 @@
  * All rights reserved.
  */
 
-package ConsoleApp;
+package ConsoleApp.Commands;
+
+import ConsoleApp.Collection;
+import ConsoleApp.Commands.Command;
+import ConsoleApp.ConsoleCommands;
 
 import java.util.HashMap;
 
-public class HelpCommand extends Command{
+public class HelpCommand extends Command {
     private final ConsoleCommands consoleCommands;
 
     public HelpCommand(ConsoleCommands consoleCommands){
@@ -17,7 +21,7 @@ public class HelpCommand extends Command{
     }
 
     @Override
-    public void execute(HashMap<String, Command> commandMap, Collection collection) {
+    public void execute(HashMap<String, Command> commandMap, Collection collection, String... arg) {
         consoleCommands.help(commandMap);
     }
 }

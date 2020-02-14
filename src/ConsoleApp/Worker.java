@@ -7,8 +7,9 @@
 package ConsoleApp;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-public class Worker {
+public class Worker implements Comparable<Worker> {
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -97,15 +98,59 @@ public class Worker {
     @Override
     public String toString() {
         return
-                Colors.blue() +" id: " + Colors.reset() + id +
-                Colors.blue() +"\n Имя рабочего: "+ Colors.reset() + name +
-                Colors.blue() +"\n Координаты рабочего: "+ Colors.reset() + coordinates.toString() +
-                Colors.blue() +"\n Дата добавления рабочего: "+ Colors.reset() + creationDate +
-                Colors.blue() +"\n Зарплата рабочего: "+ Colors.reset() + salary +
-                Colors.blue() +"\n Должность рабочего: "+ Colors.reset() + position.getValue() +
-                Colors.blue() +"\n Статус рабочего: "+ Colors.reset() + status.getValue() +
-                Colors.blue() +"\n Человек: "+ Colors.reset() + person +
-                '}';
+                Colors.blue() + " id: " + Colors.reset() + id +
+                        Colors.blue() + "\n Имя рабочего: " + Colors.reset() + name +
+                        Colors.blue() + "\n Координаты рабочего: " + Colors.reset() + coordinates.toString() +
+                        Colors.blue() + "\n Дата добавления рабочего: " + Colors.reset() + creationDate +
+                        Colors.blue() + "\n Зарплата рабочего: " + Colors.reset() + salary +
+                        Colors.blue() + "\n Должность рабочего: " + Colors.reset() + position.getValue() +
+                        Colors.blue() + "\n Статус рабочего: " + Colors.reset() + status.getValue() +
+                        Colors.blue() + "\n Человек: " + Colors.reset() + person +
+                        '}';
     }
 
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public int compareTo(Worker o) {
+        return Integer.compare(this.hashCode(), o.hashCode());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Worker)) return false;
+        Worker worker = (Worker) o;
+        return id == worker.id &&
+                Double.compare(worker.salary, salary) == 0 &&
+                name.equals(worker.name) &&
+                coordinates.equals(worker.coordinates) &&
+                creationDate.equals(worker.creationDate) &&
+                position == worker.position &&
+                status == worker.status &&
+                Objects.equals(person, worker.person);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, coordinates, creationDate, salary, position, status, person);
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
 }

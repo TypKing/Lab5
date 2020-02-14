@@ -6,6 +6,8 @@
 
 package ConsoleApp;
 
+import ConsoleApp.Commands.*;
+
 import java.util.Scanner;
 
 public class Main {
@@ -19,18 +21,47 @@ public class Main {
         Command exit = new ExitCommand(consoleCommands);
         Command add = new AddCommand(consoleCommands);
         Command show = new ShowCommand(consoleCommands);
+        Command remove = new RemoveCommand(consoleCommands);
+        Command update = new UpdateCommand(consoleCommands);
+        Command clear = new ClearCommand(consoleCommands);
+        Command addIfMax = new AddIfMaxCommand(consoleCommands);
         CommandManager mySwitch = new CommandManager();
         mySwitch.register("help", help);
         mySwitch.register("info", info);
         mySwitch.register("exit", exit);
         mySwitch.register("add", add);
         mySwitch.register("show", show);
+        mySwitch.register("update", update);
+        mySwitch.register("remove_by_id", remove);
+        mySwitch.register("clear", clear);
+        mySwitch.register("add_if_max",addIfMax);
         while (!line.equals("exit")) {
             line = scanner.nextLine();
+            String[] lines = line.split(" ");
             try {
-                mySwitch.execute(line, mySwitch.getCommandMap(),myCollection);
-            }catch (IllegalStateException e){
-                System.out.println("Вы ввели неправильную команду, попробуйте снова!");
+                String command = lines[0];
+
+                if (lines.length > 1) {
+                    String arg = lines[1];
+                    try {
+
+                        mySwitch.execute(command, mySwitch.getCommandMap(), myCollection, arg);
+                    } catch (IllegalStateException e) {
+                        System.out.println("Вы ввели неправильную команду, попробуйте снова!");
+                    } catch (ArgException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else {
+                    try {
+                        mySwitch.execute(command, mySwitch.getCommandMap(), myCollection);
+                    } catch (IllegalStateException e) {
+                        System.out.println("Вы ввели неправильную команду, попробуйте снова!");
+                    } catch (ArgException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Вы ввели непрвильную команду, попробуйте снова");
             }
 
         }

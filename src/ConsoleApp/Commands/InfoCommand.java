@@ -4,11 +4,16 @@
  * All rights reserved.
  */
 
-package ConsoleApp;
+package ConsoleApp.Commands;
+
+import ConsoleApp.ArgException;
+import ConsoleApp.Collection;
+import ConsoleApp.Commands.Command;
+import ConsoleApp.ConsoleCommands;
 
 import java.util.HashMap;
 
-public class InfoCommand extends Command{
+public class InfoCommand extends Command {
     private final ConsoleCommands consoleCommands;
 
     public InfoCommand(ConsoleCommands consoleCommands){
@@ -17,7 +22,10 @@ public class InfoCommand extends Command{
     }
 
     @Override
-    public void execute(HashMap<String, Command> commandMap, Collection collection) {
-        consoleCommands.info(collection);
+    public void execute(HashMap<String, Command> commandMap, Collection collection, String... arg) {
+        if (arg.length > 0) throw new ArgException();
+        else {
+            consoleCommands.info(collection);
+        }
     }
 }

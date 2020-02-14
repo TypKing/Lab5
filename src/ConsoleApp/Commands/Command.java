@@ -4,21 +4,32 @@
  * All rights reserved.
  */
 
-package ConsoleApp;
+package ConsoleApp.Commands;
+
+import ConsoleApp.Collection;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
 public abstract class Command {
     private String description;
-    void execute(HashMap<String, Command> hashMap, Collection collection) {
+    private String args = "";
+    public void execute(HashMap<String, Command> hashMap, Collection collection, String... arg) {
 
     };
     public String getDescription() {
         return description;
     }
 
+    public void setArgs(String args) {
+        this.args = args;
+    }
+
+    public String getArgs() {
+        return args;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
 }
