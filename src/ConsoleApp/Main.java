@@ -8,14 +8,25 @@ package ConsoleApp;
 
 import ConsoleApp.Commands.*;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
+    private static String path;
+    {
+        String filePath = System.getenv("INPUT_PATH");
+        if (filePath == null){
+            setPath("src\\ConsoleApp\\resources\\data.json");
+        }else{
+            setPath(filePath);
+        }
+    }
     public static void main(String[] args) {
+        Main main = new Main();
         Scanner scanner = new Scanner(System.in);
         String line = "";
         ConsoleCommands consoleCommands = new ConsoleCommands();
-        Collection myCollection = new Collection();
+        Collection myCollection = new Collection(new File(getPath()));
         Command help = new HelpCommand(consoleCommands);
         Command info = new InfoCommand(consoleCommands);
         Command exit = new ExitCommand(consoleCommands);
@@ -25,7 +36,17 @@ public class Main {
         Command update = new UpdateCommand(consoleCommands);
         Command clear = new ClearCommand(consoleCommands);
         Command addIfMax = new AddIfMaxCommand(consoleCommands);
+        Command removeGreater = new RemoveGreater(consoleCommands);
+        Command removeLower = new RemoveLower(consoleCommands);
+        Command countGreaterThanSalary = new CountGreaterThanSalary(consoleCommands);
+        Command printfields = new PrintFieldAscendingPerson(consoleCommands);
+        Command save = new SaveCommand(consoleCommands);
+        Command execute = new ExecuteScript(consoleCommands);
         CommandManager mySwitch = new CommandManager();
+        mySwitch.register("save",save);
+        mySwitch.register("execute_script",execute);
+        mySwitch.register("count_greater_than_salary",countGreaterThanSalary);
+        mySwitch.register("print_field_ascending_person",printfields);
         mySwitch.register("help", help);
         mySwitch.register("info", info);
         mySwitch.register("exit", exit);
@@ -35,6 +56,8 @@ public class Main {
         mySwitch.register("remove_by_id", remove);
         mySwitch.register("clear", clear);
         mySwitch.register("add_if_max",addIfMax);
+        mySwitch.register("remove_greater", removeGreater);
+        mySwitch.register("remove_lower", removeLower);
         while (!line.equals("exit")) {
             line = scanner.nextLine();
             String[] lines = line.split(" ");
@@ -44,7 +67,6 @@ public class Main {
                 if (lines.length > 1) {
                     String arg = lines[1];
                     try {
-
                         mySwitch.execute(command, mySwitch.getCommandMap(), myCollection, arg);
                     } catch (IllegalStateException e) {
                         System.out.println("Вы ввели неправильную команду, попробуйте снова!");
@@ -67,34 +89,12 @@ public class Main {
         }
         scanner.close();
     }
+
+    public static String getPath() {
+        return path;
+    }
+
+    public static void setPath(String path) {
+        Main.path = path;
+    }
 }
-
-/*
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
-
-System.out.println(ANSI_PURPLE + "Список комманд:" + ANSI_RESET + " ");
-        System.out.println(ANSI_RED + "help:" + ANSI_RESET + " вывести справку по доступным командам");
-        System.out.println(ANSI_RED + "info:" + ANSI_RESET + " вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)");
-        System.out.println(ANSI_RED + "show:" + ANSI_RESET + " вывести в стандартный поток вывода все элементы коллекции в строковом представлении");
-        System.out.println(ANSI_RED + "add {element}:" + ANSI_RESET + " добавить новый элемент в коллекцию");
-        System.out.println(ANSI_RED + "update if {element}:" + ANSI_RESET + " обновить значение элемента коллекции, id которого равен заданному");
-        System.out.println(ANSI_RED + "remove_by_id id:" + ANSI_RESET + " удалить элемент из коллекции по его id");
-        System.out.println(ANSI_RED + "clear:" + ANSI_RESET + " очистить коллекцию");
-        System.out.println(ANSI_RED + "save:" + ANSI_RESET + " сохранить коллекцию в файл");
-        System.out.println(ANSI_RED + "execute_script file_name:" + ANSI_RESET + " считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.");
-        System.out.println(ANSI_RED + "exit:" + ANSI_RESET + " завершить программу (без сохранения в файл)");
-        System.out.println(ANSI_RED + "remove_first:" + ANSI_RESET + " удалить первый элемент из коллекции");
-        System.out.println(ANSI_RED + "add_if_max {element}:" + ANSI_RESET + " добавить новый элемент в коллекцию, если его значение превышает значение наибольшего элемента этой коллекции");
-        System.out.println(ANSI_RED + "history:" + ANSI_RESET + " вывести последние 12 команд (без их аргументов)");
-        System.out.println(ANSI_RED + "min_by_id:" + ANSI_RESET + " вывести любой объект из коллекции, значение поля id которого является минимальным");
-        System.out.println(ANSI_RED + "filter_by_salary salary:" + ANSI_RESET + " вывести элементы, значение поля salary которых равно заданному");
-        System.out.println(ANSI_RED + "print_field_descending_person person:" + ANSI_RESET + " вывести значения поля person в порядке убывания ");
- */

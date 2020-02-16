@@ -8,7 +8,7 @@ package ConsoleApp.Commands;
 
 import ConsoleApp.ArgException;
 import ConsoleApp.Collection;
-import ConsoleApp.Commands.Command;
+import ConsoleApp.CommandManager;
 import ConsoleApp.ConsoleCommands;
 
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class UpdateCommand extends Command {
     }
 
     @Override
-    public void execute(HashMap<String, Command> commandMap, Collection collection, String... arg) {
+    public void execute(HashMap<String, Command> commandMap, Collection collection, CommandManager mySwitch, String... arg) {
         try {
             consoleCommands.update(collection,Integer.parseInt(arg[0]));
         }catch (NumberFormatException | ArrayIndexOutOfBoundsException e){

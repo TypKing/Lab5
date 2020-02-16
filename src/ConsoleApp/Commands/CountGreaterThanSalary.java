@@ -6,22 +6,27 @@
 
 package ConsoleApp.Commands;
 
+import ConsoleApp.ArgException;
 import ConsoleApp.Collection;
 import ConsoleApp.CommandManager;
 import ConsoleApp.ConsoleCommands;
 
 import java.util.HashMap;
 
-public class HelpCommand extends Command {
+public class CountGreaterThanSalary extends Command {
     private final ConsoleCommands consoleCommands;
 
-    public HelpCommand(ConsoleCommands consoleCommands){
-        setDescription("вывести справку по доступным командам");
+    public CountGreaterThanSalary(ConsoleCommands consoleCommands) {
+        setDescription("вывести элементы, значение поля name которых больше заданного");
+        setArgs(" salary");
         this.consoleCommands = consoleCommands;
     }
 
     @Override
     public void execute(HashMap<String, Command> commandMap, Collection collection, CommandManager mySwitch, String... arg) {
-        consoleCommands.help(commandMap);
+        if (arg.length != 1) throw new ArgException();
+        else {
+            consoleCommands.countGreaterThanSalary(collection,arg[0]);
+        }
     }
 }

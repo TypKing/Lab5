@@ -33,6 +33,24 @@ public class Factory {
     private long z;
     Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Создает человека
+     * @return человек Person
+     */
+    public Person createPerson(){
+        System.out.println("Введите рост рабочего.");
+        setHeight();
+        System.out.println("Введите вес рабочего");
+        setWeight();
+        setPassportID();
+        setLocation();
+        return new Person(height,weight,passportID,x1,y2,z);
+    }
+
+    /**
+     * Создает рабочего
+     * @return рабочий Worker
+     */
     public Worker createWorker() {
         System.out.println("Здравствуйте! Для добавления нового рабочего в систему необходимо ввести данные о нем!");
         System.out.println("Введите пожалуйста ФИО");
@@ -205,18 +223,27 @@ public class Factory {
     }
 
     public void setHeight() {
+        System.out.println("У рабочего есть рост? Да/Нет");
         String line = scanner.nextLine();
-        try {
-            Double d = Double.parseDouble(line);
-            if (d > 0) {
-                height = d;
-            } else {
-                System.out.println("Вы ввели отрицательный рост. Как человек может быть с отрицательным ростом?");
-                setHeight();
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Вы ввели неккоректное число, попробуйте снова!");
-            setHeight();
+        line = line.toLowerCase();
+        switch (line) {
+            case ("да"):
+                try {
+                    Double d = Double.parseDouble(line);
+                    if (d > 0) {
+                        height = d;
+                    } else {
+                        System.out.println("Вы ввели отрицательный рост. Как человек может быть с отрицательным ростом?");
+                        setHeight();
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Вы ввели неккоректное число, попробуйте снова!");
+                    setHeight();
+                }
+                break;
+            case ("нет"):
+                height = null;
+                break;
         }
     }
 

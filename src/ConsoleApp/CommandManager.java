@@ -11,18 +11,26 @@ import ConsoleApp.Commands.Command;
 import java.util.HashMap;
 
 public class CommandManager {
-
     private final HashMap<String, Command> commandMap = new HashMap<>();
+
     public void register(String commandName, Command command) {
         commandMap.put(commandName, command);
     }
 
+    /**
+     * Выполняет команду с заданной commandName находя ее в commandMap
+     *
+     * @param commandName название команды
+     * @param commandMap  карта команд
+     * @param collection  коллекция с которой работают команды
+     * @param args        аргументы
+     */
     public void execute(String commandName, HashMap<String, Command> commandMap, Collection collection, String... args) {
         Command command = commandMap.get(commandName);
         if (command == null) {
             throw new IllegalStateException("no command registered for " + commandName);
         }
-            command.execute(commandMap, collection,args);
+        command.execute(commandMap, collection, this, args);
 
     }
 

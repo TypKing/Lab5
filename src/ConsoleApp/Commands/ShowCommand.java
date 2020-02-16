@@ -8,7 +8,7 @@ package ConsoleApp.Commands;
 
 import ConsoleApp.ArgException;
 import ConsoleApp.Collection;
-import ConsoleApp.Commands.Command;
+import ConsoleApp.CommandManager;
 import ConsoleApp.ConsoleCommands;
 
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class ShowCommand extends Command {
     }
 
     @Override
-    public void execute(HashMap<String, Command> commandMap, Collection collection, String... arg) {
+    public void execute(HashMap<String, Command> commandMap, Collection collection, CommandManager mySwitch, String... arg) {
         if (arg.length > 0) throw new ArgException();
         else {
             consoleCommands.show(collection);

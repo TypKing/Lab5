@@ -11,23 +11,31 @@ import ConsoleApp.Collection;
 import ConsoleApp.CommandManager;
 import ConsoleApp.ConsoleCommands;
 
+import java.io.File;
 import java.util.HashMap;
 
-public class RemoveCommand extends Command {
+public class ExecuteScript extends Command {
     private final ConsoleCommands consoleCommands;
 
-    public RemoveCommand(ConsoleCommands consoleCommands){
-        setDescription("удалить элемент из коллекции по его id");
-        setArgs(" id");
+    public ExecuteScript(ConsoleCommands consoleCommands) {
+        setDescription("добавить новый элемент в коллекцию");
+        setArgs(" file_name");
         this.consoleCommands = consoleCommands;
     }
 
     @Override
     public void execute(HashMap<String, Command> commandMap, Collection collection, CommandManager mySwitch, String... arg) {
-        try {
-            consoleCommands.remove(collection, Integer.parseInt(arg[0]));
-        }catch (NumberFormatException | ArrayIndexOutOfBoundsException e){
-            throw new ArgException();
+        String path;
+        String filePath = System.getenv("INPUT_PATH");
+        if (filePath == null) {
+            path = "src\\ConsoleApp\\resources\\";
+        } else {
+            path = filePath;
+        }
+        if (arg.length != 1) throw new ArgException();
+        else {
+            File file = new File(path+arg[0]);
+            consoleCommands.executeScript(file,mySwitch,collection);
         }
     }
 }

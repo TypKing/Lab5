@@ -9,6 +9,8 @@ package ConsoleApp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import com.google.gson.*;
+
 public class Worker implements Comparable<Worker> {
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -53,6 +55,16 @@ public class Worker implements Comparable<Worker> {
                     "x=" + x +
                     ", y=" + y +
                     '}';
+        }
+
+        public float getX() {
+            if(x>553) throw new FieldException();
+            else return x;
+        }
+
+        public Long getY() {
+            if(y<=-179) throw new FieldException();
+            else return y;
         }
 
         private float x; //Максимальное значение поля: 553
@@ -110,12 +122,13 @@ public class Worker implements Comparable<Worker> {
     }
 
     public int getId() {
-        return id;
+        if (id < 0) throw new FieldException();
+        else return id;
     }
 
     @Override
     public int compareTo(Worker o) {
-        return Integer.compare(this.hashCode(), o.hashCode());
+        return Double.compare(getSalary(), o.getSalary());
     }
 
     @Override
@@ -142,12 +155,64 @@ public class Worker implements Comparable<Worker> {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public static Worker parseWorker(String json) {
+        Worker worker = new Gson().fromJson(json, Worker.class);
+        try {
+            worker.getSalary();
+            worker.getId();
+            worker.getName();
+            worker.getCoordinates();
+            worker.getCoordinates().getX();
+            worker.getCoordinates().getY();
+            if(worker.getPerson() != null){
+                worker.getPerson().getLocation();
+                worker.getPerson().getWeight();
+                worker.getPerson().getHeight();
+                worker.getPerson().getPassportID();
+                worker.getPerson().getLocation().getX();
+                worker.getPerson().getLocation().getY();
+            }
+            worker.getCreationDate();
+            worker.getPosition();
+            worker.getStatus();
+            return worker;
+        }catch (FieldException e){
+            throw new FileArgsException();
+        }
+    }
+
+    public String toJSON() {
+        return new Gson().toJson(this);
     }
 
     public double getSalary() {
-        return salary;
+        if (salary < 0) throw new FieldException();
+        else return salary;
+    }
+
+    public String getName() {
+        if (name == null || name.equals("")) throw new FieldException();
+        else return name;
+    }
+
+    public Coordinates getCoordinates() {
+        if (coordinates == null) throw new FieldException();
+        else return coordinates;
+    }
+
+    public LocalDateTime getCreationDate() {
+        if(creationDate == null) throw new FieldException();
+        else return creationDate;
+    }
+
+    public Position getPosition() {
+        if(position == null) throw new FieldException();
+        else return position;
+    }
+
+    public Status getStatus() {
+        if(status == null) throw new FieldException();
+        else return status;
     }
 
     public Person getPerson() {

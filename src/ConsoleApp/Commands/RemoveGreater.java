@@ -6,22 +6,26 @@
 
 package ConsoleApp.Commands;
 
+import ConsoleApp.ArgException;
 import ConsoleApp.Collection;
 import ConsoleApp.CommandManager;
 import ConsoleApp.ConsoleCommands;
 
 import java.util.HashMap;
 
-public class HelpCommand extends Command {
+public class RemoveGreater extends Command {
     private final ConsoleCommands consoleCommands;
 
-    public HelpCommand(ConsoleCommands consoleCommands){
-        setDescription("вывести справку по доступным командам");
+    public RemoveGreater(ConsoleCommands consoleCommands) {
+        setDescription("удалить из коллекции все элементы, превышающие заданный");
         this.consoleCommands = consoleCommands;
     }
 
     @Override
     public void execute(HashMap<String, Command> commandMap, Collection collection, CommandManager mySwitch, String... arg) {
-        consoleCommands.help(commandMap);
+        if (arg.length > 0) throw new ArgException();
+        else {
+            consoleCommands.removeGreater(collection);
+        }
     }
 }
