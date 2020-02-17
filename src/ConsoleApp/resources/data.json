@@ -1,4 +1,3 @@
 [
-{"id":1,"name":"afjawklawjf","coordinates":{"x":2.0,"y":2},"creationDate":{"date":{"year":2020,"month":2,"day":16},"time":{"hour":18,"minute":37,"second":8,"nano":410000000}},"salary":2000.0,"position":"CLEANER","status":"REGULAR"},
-{"id":2,"name":"kfmaefkljaflkjaf","coordinates":{"x":20.0,"y":20},"creationDate":{"date":{"year":2020,"month":2,"day":16},"time":{"hour":18,"minute":37,"second":35,"nano":950000000}},"salary":20.0,"position":"CLEANER","status":"REGULAR"}
+{"id":1,"name":"lekfseklfj","coordinates":{"x":2.0,"y":2},"creationDate":{"date":{"year":2020,"month":2,"day":16},"time":{"hour":21,"minute":43,"second":3,"nano":201000000}},"salary":2.0,"position":"CLEANER","status":"REGULAR"}
 ]

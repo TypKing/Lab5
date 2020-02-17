@@ -15,10 +15,11 @@ public class Main {
     private static String path;
     {
         String filePath = System.getenv("INPUT_PATH");
+        System.out.println(System.getenv("INPUT_PATH"));
         if (filePath == null){
             setPath("src\\ConsoleApp\\resources\\data.json");
         }else{
-            setPath(filePath);
+            setPath(filePath+"data.json");
         }
     }
     public static void main(String[] args) {
@@ -27,6 +28,7 @@ public class Main {
         String line = "";
         ConsoleCommands consoleCommands = new ConsoleCommands();
         Collection myCollection = new Collection(new File(getPath()));
+        Command filter = new FilterCommand(consoleCommands);
         Command help = new HelpCommand(consoleCommands);
         Command info = new InfoCommand(consoleCommands);
         Command exit = new ExitCommand(consoleCommands);
@@ -43,6 +45,7 @@ public class Main {
         Command save = new SaveCommand(consoleCommands);
         Command execute = new ExecuteScript(consoleCommands);
         CommandManager mySwitch = new CommandManager();
+        mySwitch.register("filter_contains_name",filter);
         mySwitch.register("save",save);
         mySwitch.register("execute_script",execute);
         mySwitch.register("count_greater_than_salary",countGreaterThanSalary);

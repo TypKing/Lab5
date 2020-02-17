@@ -186,4 +186,11 @@ public class ConsoleCommands {
             System.out.println("Скрипт не найден.");
         }
     }
+    public void filterName(Collection collection, String arg){
+        for (Worker worker:collection.getCollection()) {
+            if(worker.getName().contains(arg)){
+                System.out.println(worker.toString());
+            }
+        }
+    }
 }

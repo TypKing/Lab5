@@ -117,8 +117,7 @@ public class Worker implements Comparable<Worker> {
                         Colors.blue() + "\n Зарплата рабочего: " + Colors.reset() + salary +
                         Colors.blue() + "\n Должность рабочего: " + Colors.reset() + position.getValue() +
                         Colors.blue() + "\n Статус рабочего: " + Colors.reset() + status.getValue() +
-                        Colors.blue() + "\n Человек: " + Colors.reset() + person +
-                        '}';
+                        Colors.blue() + "\n Человек: " + Colors.reset() + person;
     }
 
     public int getId() {

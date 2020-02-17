@@ -205,7 +205,6 @@ public class Factory {
         String line = scanner.nextLine();
         switch (line) {
             case ("Да"):
-                System.out.println("Введите рост рабочего.");
                 setHeight();
                 System.out.println("Введите вес рабочего");
                 setWeight();
@@ -229,6 +228,7 @@ public class Factory {
         switch (line) {
             case ("да"):
                 try {
+                    line = scanner.nextLine();
                     Double d = Double.parseDouble(line);
                     if (d > 0) {
                         height = d;

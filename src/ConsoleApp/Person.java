@@ -65,8 +65,7 @@ public class Person{
             return "{" +
                     "x=" + x +
                     ", y=" + y +
-                    ", z=" + z +
-                    '}';
+                    ", z=" + z;
         }
 
         public Location(Float x, Long y, long z) {
@@ -106,7 +105,7 @@ public class Person{
     }
 
     public String getPassportID() {
-        if(passportID == null || passportID.equals("")) throw new FieldException();
+        if(passportID != null && passportID.equals("")) throw new FieldException();
         else return passportID;
     }
     public Location getLocation() {
